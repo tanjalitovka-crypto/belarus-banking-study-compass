@@ -1,9 +1,6 @@
 /*
  * Tailwind v4 entry: config lives here, with no tailwind.config.js or PostCSS plugin.
- * - Keep every @import in this top block, above @theme and the rest of the file. Install an
- *   npm package before @importing its CSS. Never @import a remote URL (web fonts, CDN CSS): the
- *   build resolves @import from the filesystem. Load those with a <link> in the head() of
- *   src/routes/__root.tsx and name the family in a --font-* token in @theme inline below.
+ * Keep every @import in this top block. Web fonts are loaded via <link> in src/routes/__root.tsx.
  */
 @import "tailwindcss" source(none);
 @source "../src";
@@ -12,31 +9,20 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system definition.
- *
- * The design lives in this file: oklch color tokens on the shadcn variables
- * (--background, --foreground, --primary, --secondary, --muted, --accent, ...) plus
- * new tokens as needed, font tokens, and custom styles and animations.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ * Design system: "учебный рабочий лист" — бумага цвета слоновой кости, чернильный текст,
+ * глубокий зелёный как основной цвет и красный орнаментальный акцент.
  */
 
 @theme inline {
+  --font-display: "Literata", Georgia, serif;
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -51,8 +37,15 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-ornament: var(--ornament);
+  --color-ornament-foreground: var(--ornament-foreground);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
   --color-destructive: var(--destructive);
+  --color-destructive-soft: var(--destructive-soft);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-highlight: var(--highlight);
+  --color-paper: var(--paper);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -73,74 +66,48 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
-}
+  --radius: 0.5rem;
+  --background: oklch(0.93 0.018 85);
+  --paper: oklch(0.985 0.01 88);
+  --foreground: oklch(0.24 0.03 255);
+  --card: oklch(0.985 0.01 88);
+  --card-foreground: oklch(0.24 0.03 255);
+  --popover: oklch(0.99 0.008 88);
+  --popover-foreground: oklch(0.24 0.03 255);
+  --primary: oklch(0.42 0.085 162);
+  --primary-foreground: oklch(0.98 0.01 88);
+  --secondary: oklch(0.94 0.025 160);
+  --secondary-foreground: oklch(0.3 0.06 162);
+  --muted: oklch(0.95 0.014 85);
+  --muted-foreground: oklch(0.48 0.025 255);
+  --accent: oklch(0.94 0.03 160);
+  --accent-foreground: oklch(0.3 0.06 162);
+  --ornament: oklch(0.52 0.17 27);
+  --ornament-foreground: oklch(0.98 0.01 88);
+  --success: oklch(0.5 0.12 155);
+  --success-soft: oklch(0.94 0.05 155);
+  --destructive: oklch(0.55 0.19 27);
+  --destructive-soft: oklch(0.95 0.035 27);
+  --destructive-foreground: oklch(0.98 0.01 88);
+  --highlight: oklch(0.93 0.08 92);
+  --border: oklch(0.86 0.02 85);
+  --input: oklch(0.78 0.025 85);
+  --ring: oklch(0.42 0.085 162);
+  --chart-1: oklch(0.42 0.085 162);
+  --chart-2: oklch(0.52 0.17 27);
+  --chart-3: oklch(0.6 0.1 85);
+  --chart-4: oklch(0.45 0.05 255);
+  --chart-5: oklch(0.7 0.08 160);
+  --sidebar: oklch(0.97 0.012 88);
+  --sidebar-foreground: oklch(0.24 0.03 255);
+  --sidebar-primary: oklch(0.42 0.085 162);
+  --sidebar-primary-foreground: oklch(0.98 0.01 88);
+  --sidebar-accent: oklch(0.94 0.03 160);
+  --sidebar-accent-foreground: oklch(0.3 0.06 162);
+  --sidebar-border: oklch(0.86 0.02 85);
+  --sidebar-ring: oklch(0.42 0.085 162);
 
-.dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --shadow-sheet: 0 1px 2px oklch(0.3 0.03 85 / 0.08), 0 18px 50px -20px oklch(0.3 0.03 85 / 0.35);
 }
 
 @layer base {
@@ -148,8 +115,196 @@
     border-color: var(--color-border);
   }
 
+  html {
+    font-family: var(--font-sans);
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .sheet {
+    background-color: var(--color-paper);
+    box-shadow: var(--shadow-sheet);
+  }
+
+  /* Belarusian-style geometric ornament band */
+  .ornament-band {
+    height: 14px;
+    background-color: var(--color-paper);
+    background-image:
+      linear-gradient(45deg, transparent 37%, var(--color-ornament) 37%, var(--color-ornament) 63%, transparent 63%),
+      linear-gradient(-45deg, transparent 37%, var(--color-ornament) 37%, var(--color-ornament) 63%, transparent 63%);
+    background-size: 14px 14px;
+    background-position: center;
+  }
+
+  .ornament-rule {
+    height: 2px;
+    background-image: linear-gradient(to right, var(--color-ornament) 50%, transparent 50%);
+    background-size: 10px 2px;
+  }
+
+  .task-number {
+    font-family: var(--font-display);
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-muted-foreground);
+  }
+
+  /* Underlined fill-in field that looks like a line on paper */
+  .fill-line {
+    display: inline-block;
+    border: 0;
+    border-bottom: 1.5px solid var(--color-input);
+    background: transparent;
+    padding: 0 0.25rem;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--color-primary);
+    outline: none;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  .fill-line:focus {
+    border-bottom-color: var(--color-primary);
+    background-color: var(--color-accent);
+  }
+  .fill-line[data-state="ok"] {
+    border-bottom-color: var(--color-success);
+    background-color: var(--color-success-soft);
+  }
+  .fill-line[data-state="bad"] {
+    border-bottom-color: var(--color-destructive);
+    background-color: var(--color-destructive-soft);
+  }
+
+  .field-box {
+    width: 100%;
+    border: 1.5px solid var(--color-input);
+    border-radius: var(--radius-md);
+    background-color: var(--color-paper);
+    padding: 0.45rem 0.6rem;
+    color: var(--color-foreground);
+    outline: none;
+    transition: border-color 0.2s, background-color 0.2s;
+  }
+  .field-box:focus {
+    border-color: var(--color-primary);
+  }
+  .field-box[data-state="ok"] {
+    border-color: var(--color-success);
+    background-color: var(--color-success-soft);
+  }
+  .field-box[data-state="bad"] {
+    border-color: var(--color-destructive);
+    background-color: var(--color-destructive-soft);
+  }
+
+  .writing-lines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(1.9rem - 1px),
+      var(--color-border) calc(1.9rem - 1px),
+      var(--color-border) 1.9rem
+    );
+    line-height: 1.9rem;
+    background-attachment: local;
+  }
+
+  .key-note {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-success);
+  }
+
+  .choice-pill {
+    border: 1.5px solid var(--color-input);
+    border-radius: 999px;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.85rem;
+    background-color: var(--color-paper);
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .choice-pill:hover {
+    border-color: var(--color-primary);
+  }
+  .choice-pill[data-selected="true"] {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+  .choice-pill[data-state="ok"] {
+    background-color: var(--color-success);
+    border-color: var(--color-success);
+    color: var(--color-primary-foreground);
+  }
+  .choice-pill[data-state="bad"] {
+    background-color: var(--color-destructive);
+    border-color: var(--color-destructive);
+    color: var(--color-destructive-foreground);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-rise {
+  animation: rise-in 0.5s ease-out both;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 12mm;
+  }
+  body {
+    background: var(--color-paper);
+  }
+  .no-print {
+    display: none !important;
+  }
+  .sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+    max-width: none !important;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+  .fill-line,
+  .field-box {
+    background: transparent !important;
+  }
+  .ornament-band,
+  .task-number {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+
+- Worksheet content and answer keys live only in `src/lib/worksheet.ts`; the web page and `scripts/generate-worksheet-docx.ts` both read it, so the two formats never drift.
+- After changing worksheet content, regenerate the Word file with `bun scripts/generate-worksheet-docx.ts` (writes `public/rabochiy-list-bankovskaya-sistema-rb.docx`, linked from the page).
+- Scoring and grade-scale logic stay pure in `src/lib/worksheet-score.ts` / `worksheet.ts` and are covered by `src/test/worksheet.test.ts`.
